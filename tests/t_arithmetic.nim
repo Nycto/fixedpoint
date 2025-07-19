@@ -41,6 +41,14 @@ template defineTests(fp: untyped, p: static Natural) =
       check -fp(-1.5, p) == fp(1.5, p)
       check -(fp(1.5, p)) == fp(-1.5, p)
 
+    for i in [0, 4, 9, 17, 23, 90, 100]:
+      test "Square root of " & $i:
+        check sqrt(i.fp(p)) == sqrt(i.float32)
+
+    for i in [0.96875, 0.5, 0.25, 0.1]:
+      test "Square root of " & $i:
+        check sqrt(i.fp(p)) == sqrt(i.float32)
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)

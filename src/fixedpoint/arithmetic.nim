@@ -1,4 +1,4 @@
-import base
+import base, util
 
 template defineMathInterop(op: untyped) =
   proc `op`*(a: SomeInteger, b: FixedPoint): typeof(b) =
@@ -45,3 +45,31 @@ template defineUnary(op: untyped) =
 
 defineUnary(`-`)
 defineUnary(`abs`)
+
+proc sqrt*(value: FixedPoint): typeof(value) =
+  ## Calculates the square root of a fixed point number without converting to a floating point
+  assert(underlying(value)(value) >= 0, "Cannot take square root of negative number")
+
+  const one = underlying(value)(1 as value)
+  if underlying(value)(value) == one or underlying(value)(value) == 0:
+    return value
+
+  const half = 0.5 as value
+  const epsilon = typeof(value)(4)
+
+  # Use Newton's method
+
+  result =
+    if underlying(value)(value) > one:
+      value.toInt.isqrt as value
+    else:
+      typeof(value)(one)
+
+  for i in 0 .. 10:
+    let previous = result
+    let next = half * (result + value / result)
+    if next.int32 == 0:
+      break
+    result = next
+    if abs(result - previous) <= epsilon:
+      break
