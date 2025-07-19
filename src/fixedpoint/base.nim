@@ -12,11 +12,11 @@ type
 
   FixedPoint* = FPInt32 | FPInt64 ## Any type of fixed point number
 
-proc fp*(value: SomeInteger, precision: static Natural): FPInt32[precision] =
+proc fp32*(value: SomeInteger, precision: static Natural): FPInt32[precision] =
   ## Creates a fixed point number
   FPInt32[precision](value shl precision)
 
-proc fp*(value: SomeFloat, precision: static Natural): FPInt32[precision] =
+proc fp32*(value: SomeFloat, precision: static Natural): FPInt32[precision] =
   ## Creates a fixed point number
   FPInt32[precision](int32(value * (1 shl precision)))
 
@@ -36,7 +36,7 @@ macro precision*(num: FixedPoint): Natural =
   typ[1].expectKind(nnkIntLit)
   return typ[1]
 
-template underlying*(value: FixedPoint): typedesc =
+template underlying*(value: FixedPoint | typedesc[FixedPoint]): typedesc =
   ## Returns the underlying type of a fixed point number
   when value is FPInt32: int32 else: int64
 
@@ -52,3 +52,9 @@ template `as`*(value: typed, prototype: FixedPoint): typeof(prototype) =
 
 proc `$`*(d: FixedPoint): string =
   $d.toFloat
+
+proc high*(typ: typedesc[FixedPoint]): typ =
+  return typeof(result)(high(typ.underlying))
+
+proc low*(typ: typedesc[FixedPoint]): typ =
+  return typeof(result)(low(typ.underlying))
