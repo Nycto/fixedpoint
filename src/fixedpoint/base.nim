@@ -48,7 +48,10 @@ proc toFloat*(d: FixedPoint): auto =
 
 template `as`*(value: typed, prototype: FixedPoint): typeof(prototype) =
   ## Ensures the given value is the same type as the prototype
-  typeof(prototype)(fp(value, prototype.precision))
+  when prototype is FPInt32:
+    typeof(prototype)(fp32(value, prototype.precision))
+  else:
+    typeof(prototype)(fp64(value, prototype.precision))
 
 proc `$`*(d: FixedPoint): string =
   $d.toFloat
@@ -58,3 +61,8 @@ proc high*(typ: typedesc[FixedPoint]): typ =
 
 proc low*(typ: typedesc[FixedPoint]): typ =
   return typeof(result)(low(typ.underlying))
+
+proc `==`*(a, b: FixedPoint): bool =
+  ## Compare two fixed point numbers
+  assert typeof(a) is typeof(b)
+  underlying(a)(a) == underlying(b)(b)

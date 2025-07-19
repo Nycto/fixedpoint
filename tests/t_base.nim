@@ -1,7 +1,7 @@
 import std/[unittest, math], fixedpoint, util
 
-template defineTests(name: string, build: untyped, p: static Natural) =
-  suite "Fixed point math at precision " & $p & " for " & name:
+template defineTests(build: untyped, p: static Natural) =
+  suite "Fixed point basics for " & $typeof(build(4, p)):
     test "toInt":
       check build(1, p).toInt == 1
       check build(1.5, p).toInt == 1
@@ -11,15 +11,21 @@ template defineTests(name: string, build: untyped, p: static Natural) =
       check build(1, p) == 1.0
       check build(1.7, p) == 1.7
 
-defineTests("FPInt32", fp32, 4)
-defineTests("FPInt32", fp32, 8)
-defineTests("FPInt32", fp32, 16)
+    test "toString":
+      check $build(10, p) == "10.0"
 
-defineTests("FPInt64", fp64, 4)
-defineTests("FPInt64", fp64, 8)
-defineTests("FPInt64", fp64, 16)
+    test "precision":
+      check build(10, p).precision == p
 
-suite "Variable fixed point precision":
+defineTests(fp32, 4)
+defineTests(fp32, 8)
+defineTests(fp32, 16)
+
+defineTests(fp64, 4)
+defineTests(fp64, 8)
+defineTests(fp64, 16)
+
+suite "Fixed point types":
   test "High":
     check high(FPInt32[4]) is FPInt32[4]
     check high(FPInt32[4]) == 134217727.9375
@@ -41,3 +47,11 @@ suite "Variable fixed point precision":
     check low(FPInt64[4]) == -5.764607523034235e+17
     check low(FPInt64[8]) == -36028797018963970.0
     check low(FPInt64[16]) == -140737488355328.0
+
+  test "as":
+    check (10 as 4.fp32(8)) == 10.fp32(8)
+    check (10 as 4.fp64(8)) == 10.fp64(8)
+
+  test "underlying":
+    check underlying(fp32(4, 8)) is int32
+    check underlying(fp64(4, 8)) is int64
