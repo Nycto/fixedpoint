@@ -1,2 +1,2 @@
-import fixedpoint/[base, arithmetic]
-export base, arithmetic
+import fixedpoint/[base, arithmetic, comparison]
+export base, arithmetic, comparison

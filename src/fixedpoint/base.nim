@@ -61,8 +61,3 @@ proc high*(typ: typedesc[FixedPoint]): typ =
 
 proc low*(typ: typedesc[FixedPoint]): typ =
   return typeof(result)(low(typ.underlying))
-
-proc `==`*(a, b: FixedPoint): bool =
-  ## Compare two fixed point numbers
-  assert typeof(a) is typeof(b)
-  underlying(a)(a) == underlying(b)(b)
