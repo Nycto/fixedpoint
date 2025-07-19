@@ -29,3 +29,12 @@ proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
 
 defineMathInterop(`*`)
 defineMathInterop(`/`)
+
+template defineInplace(op, baseOp: untyped) =
+  proc `op`*(a: var FixedPoint, b: typeof(a)) =
+    a = `baseOp`(a, b)
+
+defineInplace(`+=`, `+`)
+defineInplace(`-=`, `-`)
+defineInplace(`*=`, `*`)
+defineInplace(`/=`, `/`)

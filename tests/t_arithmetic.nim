@@ -18,6 +18,21 @@ template defineTests(fp: untyped, p: static Natural) =
       check 8.fp(p) / 4.fp(p) == 2.fp(p)
       check 11.25.fp(p) / 4.5.fp(p) == 2.5.fp(p)
 
+    test "In place operators":
+      var a = 2.fp(p)
+
+      a += 3.fp(p)
+      check a == 5.fp(p)
+
+      a -= 1.fp(p)
+      check a == 4.fp(p)
+
+      a *= 2.fp(p)
+      check a == 8.fp(p)
+
+      a /= 4.fp(p)
+      check a == 2.fp(p)
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)
