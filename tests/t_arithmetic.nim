@@ -10,6 +10,14 @@ template defineTests(fp: untyped, p: static Natural) =
       check 1.fp(p) - 1.fp(p) == 0.0
       check 1.5.fp(p) - 1.2.fp(p) == 0.3
 
+    test "Multiply":
+      check 2.fp(p) * 4.fp(p) == 8.fp(p)
+      check 2.5.fp(p) * 4.5.fp(p) == 11.25.fp(p)
+
+    test "Divide":
+      check 8.fp(p) / 4.fp(p) == 2.fp(p)
+      check 11.25.fp(p) / 4.5.fp(p) == 2.5.fp(p)
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)
