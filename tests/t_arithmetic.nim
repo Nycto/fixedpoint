@@ -33,6 +33,14 @@ template defineTests(fp: untyped, p: static Natural) =
       a /= 4.fp(p)
       check a == 2.fp(p)
 
+    test "Absolute value":
+      check abs(-1.5.fp(p)) == 1.5.fp(p)
+      check abs(1.5.fp(p)) == 1.5.fp(p)
+
+    test "Unary negation":
+      check -fp(-1.5, p) == fp(1.5, p)
+      check -(fp(1.5, p)) == fp(-1.5, p)
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)

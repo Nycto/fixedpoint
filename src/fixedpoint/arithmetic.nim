@@ -38,3 +38,10 @@ defineInplace(`+=`, `+`)
 defineInplace(`-=`, `-`)
 defineInplace(`*=`, `*`)
 defineInplace(`/=`, `/`)
+
+template defineUnary(op: untyped) =
+  proc `op`*(value: FixedPoint): typeof(value) {.inline.} =
+    return typeof(value)(`op`(underlying(value)(value)))
+
+defineUnary(`-`)
+defineUnary(`abs`)
