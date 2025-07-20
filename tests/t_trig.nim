@@ -35,6 +35,42 @@ template defineTests(fp: untyped, p: static Natural) =
       test "Sine of " & $angle & " radians":
         check sin(angle.fp(p)) == sin(angle)
 
+    # For arctan2 testing, we need to allow for larger epsilon values
+    # due to the approximation used in the implementation
+    let tolerance = 0.06.fp(p)
+
+    # Test arctan2 for different input values across all quadrants
+    for (a, b) in [
+      # First quadrant (x > 0, y > 0)
+      (1.0, 1.0),
+      (1.0, 2.0),
+      # Second quadrant (x < 0, y > 0)
+      (1.0, -1.0),
+      (2.0, -1.0),
+      # Third quadrant (x < 0, y < 0)
+      (-1.0, -1.0),
+      (-1.0, -2.0),
+      # Fourth quadrant (x > 0, y < 0)
+      (-1.0, 1.0),
+      (-2.0, 1.0),
+    ]:
+      test "Arctan2 of " & $a & " and " & $b:
+        check abs(arctan2(a.fp(p), b.fp(p)) - math.arctan2(a, b).fp(p)) <= tolerance
+
+    test "arctan2 special cases":
+      # Special cases should be exact since they use direct constant assignments
+
+      # x = 0
+      check arctan2(1.0.fp(p), 0.0.fp(p)) == (PI / 2) # PI/2
+      check arctan2(-1.0.fp(p), 0.0.fp(p)) == (-PI / 2) # -PI/2
+
+      # y = 0
+      check arctan2(0.0.fp(p), 1.0.fp(p)) == 0.0 # 0
+      check arctan2(0.0.fp(p), -1.0.fp(p)) == PI # PI
+
+      # Both x and y are 0 (special case)
+      check arctan2(0.0.fp(p), 0.0.fp(p)) == 0.0 # Convention: defined as 0
+
 defineTests(fp32, 8)
 defineTests(fp32, 16)
 

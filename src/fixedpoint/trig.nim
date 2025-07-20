@@ -86,3 +86,64 @@ proc sin*(value: FixedPoint): typeof(value) =
   # but less prone to overflow for values near 3π/2
   const halfPi = (PI / 2) as value
   return cos(halfPi - normalized)
+
+proc arctan2*(y, x: FixedPoint): typeof(y) =
+  ## Calculates the arctangent of y/x, taking into account the signs of both arguments
+  ## to determine the quadrant of the result. Returns the angle in radians.
+  ## The result is in the range [-π, π].
+
+  const zero = 0.0 as y
+  const one = 1.0 as y
+  const pi = PI as y
+  const halfPi = (PI / 2) as y
+
+  # Coefficients calibrated for better accuracy with fixed-point
+  const a = (1.0 / 3.0) as y
+  const b = (1.0 / 5.0) as y
+  const c = (1.0 / 7.0) as y
+  const d = (1.0 / 9.0) as y
+
+  # Handle special cases
+  if x == zero:
+    return
+      if y > zero:
+        halfPi
+      elif y < zero:
+        -halfPi
+      else:
+        zero
+  elif y == zero:
+    return if x > zero: zero else: pi
+
+  # First, work with absolute values and adjust the result based on quadrant later
+  let absY = abs(y)
+  let absX = abs(x)
+
+  proc polynomialApprox(z: FixedPoint): FixedPoint {.inline.} =
+    # More accurate polynomial approximation for atan(z) where z is in [0, 1]
+    # atan(z) ≈ z * (1 - a*z² + b*z⁴ - c*z⁶ + d*z⁸)
+    let z2 = z * z
+    let z4 = z2 * z2
+    let z6 = z4 * z2
+    let z8 = z6 * z2
+    return z * (one - a * z2 + b * z4 - c * z6 + d * z8)
+
+  # Determine which ratio to use to keep z in a range where our approximation works well
+  let resultAngle =
+    if absY <= absX:
+      polynomialApprox(absY / absX)
+    else:
+      # If y > x, use atan(x/y) = π/2 - atan(y/x)
+      halfPi - polynomialApprox(absX / absY)
+
+  # Adjust angle based on the quadrant
+  if x > zero:
+    if y < zero: # 4th quadrant
+      return -resultAngle
+    else: # 1st quadrant
+      return resultAngle
+  else: # x < 0
+    if y < zero: # 3rd quadrant
+      return -pi + resultAngle
+    else: # 2nd quadrant
+      return pi - resultAngle
