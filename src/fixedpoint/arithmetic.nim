@@ -1,11 +1,11 @@
 import base, util
 
 template defineMathInterop(op: untyped) =
-  proc `op`*(a: SomeInteger, b: FixedPoint): typeof(b) =
-    (a as b) `op` b
+  proc `op`*(a: SomeNumber, b: FixedPoint): typeof(b) =
+    `op`(`as`(a, b)) `op` b
 
-  proc `op`*(a: FixedPoint, b: SomeInteger): typeof(a) =
-    a `op` (b as a)
+  proc `op`*(a: FixedPoint, b: SomeNumber): typeof(a) =
+    `op`(a, `as`(b, a))
 
 template defineMathOp(op: untyped) =
   proc `op`*(a, b: FixedPoint): typeof(a) =
