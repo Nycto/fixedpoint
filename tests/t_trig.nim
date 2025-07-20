@@ -28,10 +28,15 @@ template defineTests(fp: untyped, p: static Natural) =
       # For 9π, the result should be approximately -π due to how the algorithm normalizes
       check normalizeRads((9 * PI).fp(p)) == -PI
 
-defineTests(fp32, 6)
+    for angle in [0.0, PI / 6, PI / 4, PI / 3, PI / 2, PI, 3 * PI / 2, 2 * PI]:
+      test "Cosine of " & $angle & " radians":
+        check cos(angle.fp(p)) == cos(angle)
+
+      test "Sine of " & $angle & " radians":
+        check sin(angle.fp(p)) == sin(angle)
+
 defineTests(fp32, 8)
 defineTests(fp32, 16)
 
-defineTests(fp64, 6)
 defineTests(fp64, 8)
 defineTests(fp64, 16)
