@@ -1,0 +1,24 @@
+nimTitle	arithmetic	fixedpoint/arithmetic.html	module src/fixedpoint/arithmetic		0
+nim	`+`	fixedpoint/arithmetic.html#+,FixedPoint,FixedPoint	proc `+`(a`gensym0, b`gensym0: FixedPoint): typeof(a`gensym0)		11
+nim	`+`	fixedpoint/arithmetic.html#+,SomeNumber,FixedPoint	proc `+`(a`gensym1: SomeNumber; b`gensym1: FixedPoint): typeof(b`gensym1)		4
+nim	`+`	fixedpoint/arithmetic.html#+,FixedPoint,SomeNumber	proc `+`(a`gensym1: FixedPoint; b`gensym1: SomeNumber): typeof(a`gensym1)		17
+nim	`-`	fixedpoint/arithmetic.html#-,FixedPoint,FixedPoint	proc `-`(a`gensym2, b`gensym2: FixedPoint): typeof(a`gensym2)		11
+nim	`-`	fixedpoint/arithmetic.html#-,SomeNumber,FixedPoint	proc `-`(a`gensym3: SomeNumber; b`gensym3: FixedPoint): typeof(b`gensym3)		4
+nim	`-`	fixedpoint/arithmetic.html#-,FixedPoint,SomeNumber	proc `-`(a`gensym3: FixedPoint; b`gensym3: SomeNumber): typeof(a`gensym3)		18
+nim	`*`	fixedpoint/arithmetic.html#*,FixedPoint,FixedPoint	proc `*`(a, b: FixedPoint): typeof(a)		20
+nim	`/`	fixedpoint/arithmetic.html#/,FixedPoint,FixedPoint	proc `/`(a, b: FixedPoint): typeof(a)		25
+nim	`*`	fixedpoint/arithmetic.html#*,SomeNumber,FixedPoint	proc `*`(a`gensym4: SomeNumber; b`gensym4: FixedPoint): typeof(b`gensym4)		4
+nim	`*`	fixedpoint/arithmetic.html#*,FixedPoint,SomeNumber	proc `*`(a`gensym4: FixedPoint; b`gensym4: SomeNumber): typeof(a`gensym4)		30
+nim	`/`	fixedpoint/arithmetic.html#/,SomeNumber,FixedPoint	proc `/`(a`gensym5: SomeNumber; b`gensym5: FixedPoint): typeof(b`gensym5)		4
+nim	`/`	fixedpoint/arithmetic.html#/,FixedPoint,SomeNumber	proc `/`(a`gensym5: FixedPoint; b`gensym5: SomeNumber): typeof(a`gensym5)		31
+nim	`+=`	fixedpoint/arithmetic.html#+=,FixedPoint,	proc `+=`(a`gensym6: var FixedPoint; b`gensym6: typeof(a`gensym6))		37
+nim	`-=`	fixedpoint/arithmetic.html#-=,FixedPoint,	proc `-=`(a`gensym7: var FixedPoint; b`gensym7: typeof(a`gensym7))		38
+nim	`*=`	fixedpoint/arithmetic.html#*=,FixedPoint,	proc `*=`(a`gensym8: var FixedPoint; b`gensym8: typeof(a`gensym8))		39
+nim	`/=`	fixedpoint/arithmetic.html#/=,FixedPoint,	proc `/=`(a`gensym9: var FixedPoint; b`gensym9: typeof(a`gensym9))		40
+nim	`-`	fixedpoint/arithmetic.html#-,FixedPoint	proc `-`(value`gensym10: FixedPoint): typeof(value`gensym10)		46
+nim	abs	fixedpoint/arithmetic.html#abs,FixedPoint	proc abs(value`gensym11: FixedPoint): typeof(value`gensym11)		47
+nim	sqrt	fixedpoint/arithmetic.html#sqrt,FixedPoint	proc sqrt(value: FixedPoint): typeof(value)		49
+nimgrp	/	fixedpoint/arithmetic.html#/-procs-all	proc		25
+nimgrp	*	fixedpoint/arithmetic.html#*-procs-all	proc		20
+nimgrp	-	fixedpoint/arithmetic.html#--procs-all	proc		11
+nimgrp	+	fixedpoint/arithmetic.html#+-procs-all	proc		11

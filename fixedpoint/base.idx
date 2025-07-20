@@ -1,0 +1,18 @@
+nimTitle	base	fixedpoint/base.html	module src/fixedpoint/base		0
+nim	FPInt32	fixedpoint/base.html#FPInt32	type FPInt32		7
+nim	FPInt64	fixedpoint/base.html#FPInt64	type FPInt64		10
+nim	FixedPoint	fixedpoint/base.html#FixedPoint	type FixedPoint		13
+nim	fp32	fixedpoint/base.html#fp32,SomeInteger,staticNatural	proc fp32(value: SomeInteger; precision: static Natural): FPInt32[precision]		15
+nim	fp32	fixedpoint/base.html#fp32,SomeFloat,staticNatural	proc fp32(value: SomeFloat; precision: static Natural): FPInt32[precision]		19
+nim	fp64	fixedpoint/base.html#fp64,SomeInteger,staticNatural	proc fp64(value: SomeInteger; precision: static Natural): FPInt64[precision]		23
+nim	fp64	fixedpoint/base.html#fp64,SomeFloat,staticNatural	proc fp64(value: SomeFloat; precision: static Natural): FPInt64[precision]		27
+nim	precision	fixedpoint/base.html#precision.m,FixedPoint	macro precision(num: FixedPoint): Natural		31
+nim	underlying	fixedpoint/base.html#underlying.t	template underlying(value: FixedPoint | typedesc[FixedPoint]): typedesc		39
+nim	toInt	fixedpoint/base.html#toInt,FixedPoint	proc toInt(d: FixedPoint): auto		43
+nim	toFloat	fixedpoint/base.html#toFloat,FixedPoint	proc toFloat(d: FixedPoint): auto		46
+nim	`as`	fixedpoint/base.html#as.t,typed,FixedPoint	template `as`(value: typed; prototype: FixedPoint): typeof(prototype)		49
+nim	`$`	fixedpoint/base.html#$,FixedPoint	proc `$`(d: FixedPoint): string		56
+nim	high	fixedpoint/base.html#high,typedesc[FixedPoint]	proc high(typ: typedesc[FixedPoint]): typ:type		59
+nim	low	fixedpoint/base.html#low,typedesc[FixedPoint]	proc low(typ: typedesc[FixedPoint]): typ:type		62
+nimgrp	fp32	fixedpoint/base.html#fp32-procs-all	proc		15
+nimgrp	fp64	fixedpoint/base.html#fp64-procs-all	proc		23

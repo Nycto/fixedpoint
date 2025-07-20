@@ -1,0 +1,4 @@
+nimTitle	comparison	fixedpoint/comparison.html	module src/fixedpoint/comparison		0
+nim	`==`	fixedpoint/comparison.html#==,FixedPoint,FixedPoint	proc `==`(a`gensym0, b`gensym0: FixedPoint): bool		8
+nim	`<`	fixedpoint/comparison.html#<,FixedPoint,FixedPoint	proc `<`(a`gensym1, b`gensym1: FixedPoint): bool		9
+nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,FixedPoint	proc `<=`(a`gensym2, b`gensym2: FixedPoint): bool		10

@@ -1,0 +1,2 @@
+nimTitle	util	fixedpoint/util.html	module src/fixedpoint/util		0
+nim	isqrt	fixedpoint/util.html#isqrt,SomeInteger	proc isqrt(n: SomeInteger): SomeInteger		2

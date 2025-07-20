@@ -1,0 +1,7 @@
+nimTitle	trig	fixedpoint/trig.html	module src/fixedpoint/trig		0
+nim	radToDeg	fixedpoint/trig.html#radToDeg,FixedPoint	proc radToDeg(value: FixedPoint): typeof(value)		4
+nim	degToRad	fixedpoint/trig.html#degToRad,FixedPoint	proc degToRad(value: FixedPoint): typeof(value)		10
+nim	normalizeRads	fixedpoint/trig.html#normalizeRads,FixedPoint	proc normalizeRads(value: FixedPoint): typeof(value)		16
+nim	cos	fixedpoint/trig.html#cos,FixedPoint	proc cos(value: FixedPoint): typeof(value)		25
+nim	sin	fixedpoint/trig.html#sin,FixedPoint	proc sin(value: FixedPoint): typeof(value)		78
+nim	arctan2	fixedpoint/trig.html#arctan2,FixedPoint,FixedPoint	proc arctan2(y, x: FixedPoint): typeof(y)		102
