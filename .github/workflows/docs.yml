@@ -7,26 +7,28 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     container: nimlang/choosenim
+    permissions:
+      contents: write
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - run: choosenim update -y 2.0.10
+      - run: choosenim update -y 2.0.10
 
-    - run: apt-get install -y jq
+      - run: apt-get install -y jq
 
-    - run: git config --global --add safe.directory "$(pwd)"
+      - run: git config --global --add safe.directory "$(pwd)"
 
-    - run: echo "PROJECT_NAME=$(nimble dump --json | jq -r '.name')" >> $GITHUB_ENV
+      - run: echo "PROJECT_NAME=$(nimble dump --json | jq -r '.name')" >> $GITHUB_ENV
 
-    - run: nimble -y doc2 --out:docs --project "src/$PROJECT_NAME.nim"
+      - run: nimble -y doc2 --out:docs --project "src/$PROJECT_NAME.nim"
 
-    - run: cp "docs/$PROJECT_NAME.html" "docs/index.html"
+      - run: cp "docs/$PROJECT_NAME.html" "docs/index.html"
 
-    - run: find docs
+      - run: find docs
 
-    - name: Deploy documents
-      uses: peaceiris/actions-gh-pages@v3
-      if: ${{ !env.ACT }}
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs
+      - name: Deploy documents
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ !env.ACT }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs
