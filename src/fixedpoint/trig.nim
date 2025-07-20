@@ -1,6 +1,18 @@
 import base, arithmetic
 import std/math
 
+proc radToDeg*(value: FixedPoint): typeof(value) =
+  ## Converts an angle from radians to degrees
+  const oneEighty = 180.0 as value
+  const pi = PI as value
+  return value * oneEighty / pi
+
+proc degToRad*(value: FixedPoint): typeof(value) =
+  ## Converts an angle from degrees to radians
+  const oneEighty = 180.0 as value
+  const pi = PI as value
+  return value * pi / oneEighty
+
 proc normalizeRads*(value: FixedPoint): typeof(value) =
   ## Normalizes the angle (in radians) to be in the range of -π to π
   const pi2 = (2.0 * PI) as value

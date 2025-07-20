@@ -28,6 +28,22 @@ template defineTests(fp: untyped, p: static Natural) =
       # For 9π, the result should be approximately -π due to how the algorithm normalizes
       check normalizeRads((9 * PI).fp(p)) == -PI
 
+    test "Radians to degrees conversion":
+      check radToDeg(0.0.fp(p)) == 0.0
+      check radToDeg((PI / 2).fp(p)) == 90.0
+      check radToDeg(PI.fp(p)) == 180.0
+      check radToDeg((3 * PI / 2).fp(p)) == 270.0
+      check radToDeg((2 * PI).fp(p)) == 360.0
+      check radToDeg((-PI / 2).fp(p)) == -90.0
+
+    test "Degrees to radians conversion":
+      check degToRad(0.0.fp(p)) == 0.0
+      check degToRad(90.0.fp(p)) == PI / 2
+      check degToRad(180.0.fp(p)) == PI
+      check degToRad(270.0.fp(p)) == 3 * PI / 2
+      check degToRad(360.0.fp(p)) == 2 * PI
+      check degToRad(-90.0.fp(p)) == -PI / 2
+
     for angle in [0.0, PI / 6, PI / 4, PI / 3, PI / 2, PI, 3 * PI / 2, 2 * PI]:
       test "Cosine of " & $angle & " radians":
         check cos(angle.fp(p)) == cos(angle)
