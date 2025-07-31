@@ -18,6 +18,10 @@ template defineTests(fp: untyped, p: static Natural) =
       check 8.fp(p) / 4.fp(p) == 2.fp(p)
       check 11.25.fp(p) / 4.5.fp(p) == 2.5.fp(p)
 
+    test "Divide":
+      check 8.fp(p) div 4.fp(p) == 2.fp(p)
+      check 11.25.fp(p) div 4.5.fp(p) == 2.5.fp(p)
+
     test "In place operators":
       var a = 2.fp(p)
 

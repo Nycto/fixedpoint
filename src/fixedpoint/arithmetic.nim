@@ -27,8 +27,13 @@ proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
   assert(a.precision == b.precision)
   return typeof(a)(int64(a) shl a.precision / int64(b))
 
+template `div`*(a, b: FixedPoint): auto =
+  # Fixed point division
+  a / b
+
 defineMathInterop(`*`)
 defineMathInterop(`/`)
+defineMathInterop(`div`)
 
 template defineInplace(op, baseOp: untyped) =
   proc `op`*(a: var FixedPoint, b: typeof(a)) =
