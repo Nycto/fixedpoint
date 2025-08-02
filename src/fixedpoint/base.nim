@@ -28,13 +28,26 @@ proc fp64*(value: SomeFloat, precision: static Natural): FPInt64[precision] =
   ## Creates a fixed point number
   FPInt64[precision](int64(value * (1 shl precision)))
 
+proc findPrecision(typ: NimNode, original: NimNode = typ): NimNode =
+  case typ.kind
+  of nnkConstDef:
+    return typ[2].findPrecision(original)
+  of nnkIntLit:
+    return typ
+  of nnkBracketExpr:
+    typ.expectKind(nnkBracketExpr)
+    typ[0].expectKind(nnkSym)
+    return typ[1].findPrecision(original)
+  of nnkSym:
+    return typ.getImpl().findPrecision(original)
+  of nnkTypeDef:
+    return typ[2].findPrecision(original)
+  else:
+    error("Invalid type for precision: " & lispRepr(typ), original)
+
 macro precision*(num: FixedPoint): Natural =
   ## Returns the precision of a fixed point number
-  let typ = num.getTypeInst
-  typ.expectKind(nnkBracketExpr)
-  typ[0].expectKind(nnkSym)
-  typ[1].expectKind(nnkIntLit)
-  return typ[1]
+  return num.getTypeInst.findPrecision
 
 template underlying*(value: FixedPoint | typedesc[FixedPoint]): typedesc =
   ## Returns the underlying type of a fixed point number

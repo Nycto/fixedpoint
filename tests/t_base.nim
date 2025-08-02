@@ -25,7 +25,13 @@ defineTests(fp64, 4)
 defineTests(fp64, 8)
 defineTests(fp64, 16)
 
+const FPVecPrecision = 6
+type FixedPointAlias = FPInt32[FPVecPrecision]
+
 suite "Fixed point types":
+  test "Precision of aliases":
+    check FixedPointAlias(1000).precision == 6
+
   test "High":
     check high(FPInt32[4]) is FPInt32[4]
     check high(FPInt32[4]) == 134217727.9375
