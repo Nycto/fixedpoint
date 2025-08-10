@@ -25,7 +25,7 @@ proc `*`*(a, b: FixedPoint): typeof(a) {.inline.} =
 proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
   # Fixed point division
   assert(a.precision == b.precision)
-  return typeof(a)(int64(a) shl a.precision / int64(b))
+  return typeof(a)(int64(a) shl a.precision div int64(b))
 
 template `div`*(a, b: FixedPoint): auto =
   # Fixed point division
