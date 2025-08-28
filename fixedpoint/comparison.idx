@@ -1,10 +1,13 @@
 nimTitle	comparison	fixedpoint/comparison.html	module src/fixedpoint/comparison		0
-nim	`==`	fixedpoint/comparison.html#==,FixedPoint,FixedPoint	proc `==`(a`gensym0, b`gensym0: FixedPoint): bool		17
-nim	`<`	fixedpoint/comparison.html#<,FixedPoint,FixedPoint	proc `<`(a`gensym2, b`gensym2: FixedPoint): bool		9
-nim	`<`	fixedpoint/comparison.html#<,FixedPoint,SomeNumber	proc `<`(a`gensym1: FixedPoint; b`gensym1: SomeNumber): bool		11
-nim	`<`	fixedpoint/comparison.html#<,SomeNumber,FixedPoint	proc `<`(a`gensym1: SomeNumber; b`gensym1: FixedPoint): bool		18
-nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,FixedPoint	proc `<=`(a`gensym4, b`gensym4: FixedPoint): bool		9
-nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,SomeNumber	proc `<=`(a`gensym3: FixedPoint; b`gensym3: SomeNumber): bool		11
-nim	`<=`	fixedpoint/comparison.html#<=,SomeNumber,FixedPoint	proc `<=`(a`gensym3: SomeNumber; b`gensym3: FixedPoint): bool		19
+nim	`==`	fixedpoint/comparison.html#==,FixedPoint,FixedPoint	proc `==`(a`gensym0, b`gensym0: FixedPoint): bool		4
+nim	`==`	fixedpoint/comparison.html#==,FixedPoint,SomeNumber	proc `==`(a`gensym0: FixedPoint; b`gensym0: SomeNumber): bool		8
+nim	`==`	fixedpoint/comparison.html#==,SomeNumber,FixedPoint	proc `==`(a`gensym0: SomeNumber; b`gensym0: FixedPoint): bool		14
+nim	`<`	fixedpoint/comparison.html#<,FixedPoint,FixedPoint	proc `<`(a`gensym1, b`gensym1: FixedPoint): bool		4
+nim	`<`	fixedpoint/comparison.html#<,FixedPoint,SomeNumber	proc `<`(a`gensym1: FixedPoint; b`gensym1: SomeNumber): bool		8
+nim	`<`	fixedpoint/comparison.html#<,SomeNumber,FixedPoint	proc `<`(a`gensym1: SomeNumber; b`gensym1: FixedPoint): bool		15
+nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,FixedPoint	proc `<=`(a`gensym2, b`gensym2: FixedPoint): bool		4
+nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,SomeNumber	proc `<=`(a`gensym2: FixedPoint; b`gensym2: SomeNumber): bool		8
+nim	`<=`	fixedpoint/comparison.html#<=,SomeNumber,FixedPoint	proc `<=`(a`gensym2: SomeNumber; b`gensym2: FixedPoint): bool		16
 nimgrp	<=	fixedpoint/comparison.html#<=-procs-all	proc		4
 nimgrp	<	fixedpoint/comparison.html#<-procs-all	proc		4
+nimgrp	==	fixedpoint/comparison.html#==-procs-all	proc		4
