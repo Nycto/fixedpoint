@@ -5,9 +5,6 @@ template defineCompareOp(op: untyped) =
     assert(a.precision == b.precision)
     return `op`(underlying(a)(a), underlying(b)(b))
 
-template defineFullCompareOps(op: untyped) =
-  defineCompareOp(op)
-
   proc `op`*(a: FixedPoint, b: SomeNumber): bool {.inline.} =
     op(a, b as a)
 
@@ -15,5 +12,5 @@ template defineFullCompareOps(op: untyped) =
     op(a as b, b)
 
 defineCompareOp(`==`)
-defineFullCompareOps(`<`)
-defineFullCompareOps(`<=`)
+defineCompareOp(`<`)
+defineCompareOp(`<=`)

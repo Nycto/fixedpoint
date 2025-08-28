@@ -1,4 +1,5 @@
-import std/[unittest, math], fixedpoint, util
+import std/[unittest, math], fixedpoint
+include util
 
 template defineTests(build: untyped, p: static Natural) =
   suite "Fixed point basics for " & $typeof(build(4, p)):
