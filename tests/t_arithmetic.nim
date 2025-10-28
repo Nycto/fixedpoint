@@ -71,11 +71,23 @@ template defineTests(fp: untyped, p: static Natural) =
       check 2.fp(p) * highValue == highValue
       check -2.fp(p) * highValue == lowValue
 
-    test "Multiplication underflow saturation":
+    test "Multiplication underflow triggers assertion":
       check lowValue * 2.fp(p) == lowValue
       check lowValue * -2.fp(p) == highValue
       check 2.fp(p) * lowValue == lowValue
       check -2.fp(p) * lowValue == highValue
+
+    test "Addition overflow saturation":
+      check highValue + 2.fp(p) == highValue
+      check 2.fp(p) + highValue == highValue
+
+    test "Addition underflow saturation":
+      check lowValue + -2.fp(p) == lowValue
+      check -2.fp(p) + lowValue == lowValue
+
+    test "Addition symmetry saturation":
+      check highValue + -2.fp(p) == highValue - 2.fp(p)
+      check lowValue + 2.fp(p) == lowValue + 2.fp(p)
 
 defineTests(fp32, 4)
 defineTests(fp32, 8)

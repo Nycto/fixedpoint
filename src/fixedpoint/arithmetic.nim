@@ -1,26 +1,48 @@
 import base, util, std/strformat
 
 type SaturationMode = enum
+  ## Represents the action to take when a saturation occurs
   SatCalculate
   SaturateHigh
   SaturateLow
 
+template calculate(a, b, checkSaturation, body: untyped): typeof(a) =
+  ## Executes a standard operation on two fixed-point numbers
+  assert(a.precision == b.precision)
+  return
+    case checkSaturation(underlying(a)(a), underlying(b)(b))
+    of SaturateHigh:
+      typeof(a).high
+    of SaturateLow:
+      typeof(a).low
+    of SatCalculate:
+      typeof(a)(body)
+
 template defineMathInterop(op: untyped) =
+  ## Creates interop functions for fixed-point numbers with standard numbers
   proc `op`*(a: SomeNumber, b: FixedPoint): typeof(b) =
     `op`(`as`(a, b)) `op` b
 
   proc `op`*(a: FixedPoint, b: SomeNumber): typeof(a) =
     `op`(a, `as`(b, a))
 
-template defineMathOp(op: untyped) =
-  proc `op`*(a, b: FixedPoint): typeof(a) =
-    assert(a.precision == b.precision)
-    typeof(a)(`op`(underlying(a)(a), underlying(b)(b)))
+proc `-`*(a, b: FixedPoint): typeof(a) {.inline.} =
+  ## Subtraction operation
+  assert(a.precision == b.precision)
+  return typeof(a)(underlying(a)(a) - underlying(b)(b))
 
-  defineMathInterop(op)
+proc addSaturation[T: SomeInteger](a, b: T): SaturationMode =
+  # Returns the saturation mode for addition overflow
+  if (b > 0 and a > T.high - b):
+    SaturateHigh
+  elif (b < 0 and a < T.low - b):
+    SaturateLow
+  else:
+    SatCalculate
 
-defineMathOp(`+`)
-defineMathOp(`-`)
+proc `+`*(a, b: FixedPoint): typeof(a) {.inline.} =
+  ## Addition operation with saturating arithmetic
+  calculate(a, b, addSaturation, underlying(a)(a) + underlying(b)(b))
 
 proc mulSaturation[T: SomeInteger](a, b: T): SaturationMode =
   # Returns the saturation mode for multiplication overflow
@@ -47,15 +69,7 @@ proc mulSaturation[T: SomeInteger](a, b: T): SaturationMode =
 
 proc `*`*(a, b: FixedPoint): typeof(a) {.inline.} =
   # Fixed point multiplication with saturating arithmetic
-  assert(a.precision == b.precision)
-  return
-    case mulSaturation(underlying(a)(a), underlying(b)(b))
-    of SaturateHigh:
-      typeof(a).high
-    of SaturateLow:
-      typeof(a).low
-    of SatCalculate:
-      typeof(a)(int64(a) * int64(b) shr a.precision)
+  calculate(a, b, mulSaturation, int64(a) * int64(b) shr a.precision)
 
 proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
   # Fixed point division
@@ -66,6 +80,8 @@ template `div`*(a, b: FixedPoint): auto =
   # Fixed point division
   a / b
 
+defineMathInterop(`+`)
+defineMathInterop(`-`)
 defineMathInterop(`*`)
 defineMathInterop(`/`)
 defineMathInterop(`div`)
