@@ -18,18 +18,18 @@ template calculate(a, b, checkSaturation, body: untyped): typeof(a) =
     of SatCalculate:
       typeof(a)(body)
 
-template defineMathInterop(op: untyped) =
-  ## Creates interop functions for fixed-point numbers with standard numbers
-  proc `op`*(a: SomeNumber, b: FixedPoint): typeof(b) =
-    `op`(`as`(a, b)) `op` b
-
-  proc `op`*(a: FixedPoint, b: SomeNumber): typeof(a) =
-    `op`(a, `as`(b, a))
+proc subSaturation[T: SomeInteger](a, b: T): SaturationMode =
+  ## Returns the saturation mode for subtraction overflow
+  if b < 0 and a >= T.high + b:
+    SaturateHigh
+  elif b > 0 and a <= T.low + b:
+    SaturateLow
+  else:
+    SatCalculate
 
 proc `-`*(a, b: FixedPoint): typeof(a) {.inline.} =
   ## Subtraction operation
-  assert(a.precision == b.precision)
-  return typeof(a)(underlying(a)(a) - underlying(b)(b))
+  calculate(a, b, subSaturation, underlying(a)(a) - underlying(b)(b))
 
 proc addSaturation[T: SomeInteger](a, b: T): SaturationMode =
   # Returns the saturation mode for addition overflow
@@ -79,6 +79,14 @@ proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
 template `div`*(a, b: FixedPoint): auto =
   # Fixed point division
   a / b
+
+template defineMathInterop(op: untyped) =
+  ## Creates interop functions for fixed-point numbers with standard numbers
+  proc `op`*(a: SomeNumber, b: FixedPoint): typeof(b) =
+    `op`(`as`(a, b)) `op` b
+
+  proc `op`*(a: FixedPoint, b: SomeNumber): typeof(a) =
+    `op`(a, `as`(b, a))
 
 defineMathInterop(`+`)
 defineMathInterop(`-`)

@@ -89,6 +89,12 @@ template defineTests(fp: untyped, p: static Natural) =
       check highValue + -2.fp(p) == highValue - 2.fp(p)
       check lowValue + 2.fp(p) == lowValue + 2.fp(p)
 
+    test "Subtraction overflow saturation":
+      check highValue - -2.fp(p) == highValue
+
+    test "Subtraction underflow saturation":
+      check lowValue - 2.fp(p) == lowValue
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 
