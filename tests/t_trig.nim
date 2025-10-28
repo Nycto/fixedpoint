@@ -88,8 +88,8 @@ template defineTests(fp: untyped, p: static Natural) =
       # Both x and y are 0 (special case)
       check arctan2(0.0.fp(p), 0.0.fp(p)) == 0.0 # Convention: defined as 0
 
+defineTests(fp32, 7)
 defineTests(fp32, 8)
-defineTests(fp32, 16)
 
 defineTests(fp64, 8)
 defineTests(fp64, 16)

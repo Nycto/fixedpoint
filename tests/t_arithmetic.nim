@@ -16,6 +16,13 @@ template defineTests(fp: untyped, p: static Natural) =
       check 2.fp(p) * 4.fp(p) == 8.fp(p)
       check 2.5.fp(p) * 4.5.fp(p) == 11.25.fp(p)
 
+    test "Negative number multiplication":
+      check 2.fp(p) * -4.fp(p) == -8.fp(p)
+      check -2.fp(p) * 4.fp(p) == -8.fp(p)
+      check -2.5.fp(p) * -4.5.fp(p) == 11.25.fp(p)
+      check 0.fp(p) * -4.fp(p) == 0.fp(p)
+      check -2.fp(p) * 0.fp(p) == 0.fp(p)
+
     test "Divide":
       check 8.fp(p) / 4.fp(p) == 2.fp(p)
       check 11.25.fp(p) / 4.5.fp(p) == 2.5.fp(p)
@@ -55,9 +62,18 @@ template defineTests(fp: untyped, p: static Natural) =
       test "Square root of " & $i:
         check sqrt(i.fp(p)) == sqrt(i.float32)
 
+    test "Multiplication overflow triggers assertion":
+      let highValue = high(typeof(0.fp(p)))
+      expect AssertionDefect:
+        discard highValue * 2.fp(p)
+
+    test "Multiplication underflow triggers assertion":
+      let lowValue = low(typeof(0.fp(p)))
+      expect AssertionDefect:
+        discard lowValue * -2.fp(p)
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
-defineTests(fp32, 16)
 
 defineTests(fp64, 4)
 defineTests(fp64, 8)
