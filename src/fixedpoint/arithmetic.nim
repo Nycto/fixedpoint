@@ -1,5 +1,10 @@
 import base, util, std/strformat
 
+type SaturationMode = enum
+  SatCalculate
+  SaturateHigh
+  SaturateLow
+
 template defineMathInterop(op: untyped) =
   proc `op`*(a: SomeNumber, b: FixedPoint): typeof(b) =
     `op`(`as`(a, b)) `op` b
@@ -17,25 +22,40 @@ template defineMathOp(op: untyped) =
 defineMathOp(`+`)
 defineMathOp(`-`)
 
-proc isOverflowMul[T: SomeInteger](a, b: T): bool =
-  # Returns true if multiplying a and b would overflow
+proc mulSaturation[T: SomeInteger](a, b: T): SaturationMode =
+  # Returns the saturation mode for multiplication overflow
   if a == 0 or b == 0:
-    false
-  elif a == -1:
-    b == T.low
-  elif b == -1:
-    a == T.low
+    SatCalculate
+  elif a == -1 and b == T.low:
+    SaturateHigh
+  elif b == -1 and a == T.low:
+    SaturateHigh
   elif a > 0:
-    (b > 0 and a > T.high div b) or (b < 0 and b < T.low div a)
+    if b > 0 and a > T.high div b:
+      SaturateHigh
+    elif b < 0 and b < T.low div a:
+      SaturateLow
+    else:
+      SatCalculate
   else: # a < 0
-    (b > 0 and a < T.low div b) or (b < 0 and a < T.high div b)
+    if b > 0 and a < T.low div b:
+      SaturateLow
+    elif b < 0 and a < T.high div b:
+      SaturateHigh
+    else:
+      SatCalculate
 
 proc `*`*(a, b: FixedPoint): typeof(a) {.inline.} =
-  # Fixed point multipliation
+  # Fixed point multiplication with saturating arithmetic
   assert(a.precision == b.precision)
-  assert not isOverflowMul(underlying(a)(a), underlying(b)(b)),
-    fmt"Multiplication overflow for {a} * {b} at precision {a.precision}"
-  return typeof(a)(int64(a) * int64(b) shr a.precision)
+  return
+    case mulSaturation(underlying(a)(a), underlying(b)(b))
+    of SaturateHigh:
+      typeof(a).high
+    of SaturateLow:
+      typeof(a).low
+    of SatCalculate:
+      typeof(a)(int64(a) * int64(b) shr a.precision)
 
 proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
   # Fixed point division

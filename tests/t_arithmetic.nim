@@ -62,15 +62,20 @@ template defineTests(fp: untyped, p: static Natural) =
       test "Square root of " & $i:
         check sqrt(i.fp(p)) == sqrt(i.float32)
 
-    test "Multiplication overflow triggers assertion":
-      let highValue = high(typeof(0.fp(p)))
-      expect AssertionDefect:
-        discard highValue * 2.fp(p)
+    let highValue = high(typeof(0.fp(p)))
+    let lowValue = low(typeof(0.fp(p)))
 
-    test "Multiplication underflow triggers assertion":
-      let lowValue = low(typeof(0.fp(p)))
-      expect AssertionDefect:
-        discard lowValue * -2.fp(p)
+    test "Multiplication overflow saturation":
+      check highValue * 2.fp(p) == highValue
+      check highValue * -2.fp(p) == lowValue
+      check 2.fp(p) * highValue == highValue
+      check -2.fp(p) * highValue == lowValue
+
+    test "Multiplication underflow saturation":
+      check lowValue * 2.fp(p) == lowValue
+      check lowValue * -2.fp(p) == highValue
+      check 2.fp(p) * lowValue == lowValue
+      check -2.fp(p) * lowValue == highValue
 
 defineTests(fp32, 4)
 defineTests(fp32, 8)
