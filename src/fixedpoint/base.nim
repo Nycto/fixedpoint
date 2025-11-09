@@ -74,3 +74,20 @@ proc high*(typ: typedesc[FixedPoint]): typ =
 
 proc low*(typ: typedesc[FixedPoint]): typ =
   return typeof(result)(low(typ.underlying))
+
+proc toFp64*(value: FixedPoint): auto {.inline.} =
+  ## Converts a fixed point number with precision 32 to a fixed point number with precision 64
+  when value is FPInt32:
+    return FPInt64[value.precision](value.int32.int64)
+  else:
+    return value
+
+proc toFp32*(value: FixedPoint): auto {.inline.} =
+  ## Converts a fixed point number with precision 32 to a fixed point number with precision 64
+  when value is FPInt32:
+    return value
+  else:
+    return if value.int64 > high(int32):
+      high(FPInt32[value.precision])
+    else:
+      FPInt32[value.precision](value.int64.int32)

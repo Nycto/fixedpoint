@@ -18,6 +18,12 @@ template defineTests(build: untyped, p: static Natural) =
     test "precision":
       check build(10, p).precision == p
 
+    test "Converting to fp64":
+      check build(10, p).toFp64.toInt() == 10'i64
+
+    test "Converting to fp32":
+      check build(10, p).toFp32.toInt() == 10'i32
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)
