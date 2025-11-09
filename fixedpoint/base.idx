@@ -14,5 +14,7 @@ nim	`as`	fixedpoint/base.html#as.t,typed,FixedPoint	template `as`(value: typed; 
 nim	`$`	fixedpoint/base.html#$,FixedPoint	proc `$`(d: FixedPoint): string		69
 nim	high	fixedpoint/base.html#high,typedesc[FixedPoint]	proc high(typ: typedesc[FixedPoint]): typ:type		72
 nim	low	fixedpoint/base.html#low,typedesc[FixedPoint]	proc low(typ: typedesc[FixedPoint]): typ:type		75
+nim	toFp64	fixedpoint/base.html#toFp64,FixedPoint	proc toFp64(value: FixedPoint): auto		78
+nim	toFp32	fixedpoint/base.html#toFp32,FixedPoint	proc toFp32(value: FixedPoint): auto		85
 nimgrp	fp32	fixedpoint/base.html#fp32-procs-all	proc		15
 nimgrp	fp64	fixedpoint/base.html#fp64-procs-all	proc		23
