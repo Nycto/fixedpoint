@@ -24,6 +24,12 @@ template defineTests(build: untyped, p: static Natural) =
     test "Converting to fp32":
       check build(10, p).toFp32.toInt() == 10'i32
 
+    test "Create value for high":
+      discard build(high(typeof(build(0, p))).toInt(), p)
+
+    test "Create value for low":
+      discard build(low(typeof(build(0, p))).toInt(), p)
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)
