@@ -59,8 +59,12 @@ proc to*(value: FixedPoint, typ: typedesc[SomeNumber]): typ =
     return typ(value.toInt())
 
 proc checkBounds(value: SomeNumber, typ: typedesc[FixedPoint]) {.inline.} =
-  const highValue = high(typ).to(typeof(value))
-  const lowValue = low(typ).to(typeof(value))
+  when value is SomeInteger:
+    const highValue = high(underlying(typ)) shr typ.P
+    const lowValue = low(underlying(typ)) shr typ.P
+  else:
+    const highValue = float(high(underlying(typ))) / float(1 shl typ.P)
+    const lowValue = float(low(underlying(typ))) / float(1 shl typ.P)
   assert(value <= highValue, "Out of bounds: " & $value & " must be <= " & $highValue)
   assert(value >= lowValue, "Out of bounds: " & $value & " must be >= " & $lowValue)
 
