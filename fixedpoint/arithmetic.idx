@@ -21,8 +21,8 @@ nim	`/=`	fixedpoint/arithmetic.html#/=,FixedPoint,	proc `/=`(a`gensym19: var Fix
 nim	`-`	fixedpoint/arithmetic.html#-,FixedPoint	proc `-`(value`gensym20: FixedPoint): typeof(value`gensym20)		110
 nim	abs	fixedpoint/arithmetic.html#abs,FixedPoint	proc abs(value`gensym21: FixedPoint): typeof(value`gensym21)		111
 nim	sqrt	fixedpoint/arithmetic.html#sqrt,FixedPoint	proc sqrt(value: FixedPoint): typeof(value)		113
-nimgrp	/	fixedpoint/arithmetic.html#/-procs-all	proc		74
-nimgrp	div	fixedpoint/arithmetic.html#div-procs-all	proc		85
-nimgrp	*	fixedpoint/arithmetic.html#*-procs-all	proc		70
-nimgrp	-	fixedpoint/arithmetic.html#--procs-all	proc		30
 nimgrp	+	fixedpoint/arithmetic.html#+-procs-all	proc		43
+nimgrp	-	fixedpoint/arithmetic.html#--procs-all	proc		30
+nimgrp	/	fixedpoint/arithmetic.html#/-procs-all	proc		74
+nimgrp	*	fixedpoint/arithmetic.html#*-procs-all	proc		70
+nimgrp	div	fixedpoint/arithmetic.html#div-procs-all	proc		85

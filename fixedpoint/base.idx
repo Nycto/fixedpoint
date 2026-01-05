@@ -10,12 +10,12 @@ nim	toInt	fixedpoint/base.html#toInt,FixedPoint	proc toInt(d: FixedPoint): auto	
 nim	toFloat	fixedpoint/base.html#toFloat,FixedPoint	proc toFloat(d: FixedPoint): auto		49
 nim	`$`	fixedpoint/base.html#$,FixedPoint	proc `$`(d: FixedPoint): string		52
 nim	to	fixedpoint/base.html#to,FixedPoint,typedesc[SomeNumber]	proc to(value: FixedPoint; typ: typedesc[SomeNumber]): typ:type		55
-nim	fp32	fixedpoint/base.html#fp32,SomeInteger,staticNatural	proc fp32(value: SomeInteger; precision: static Natural): FPInt32[precision]		67
-nim	fp32	fixedpoint/base.html#fp32,SomeFloat,staticNatural	proc fp32(value: SomeFloat; precision: static Natural): FPInt32[precision]		72
-nim	fp64	fixedpoint/base.html#fp64,SomeInteger,staticNatural	proc fp64(value: SomeInteger; precision: static Natural): FPInt64[precision]		77
-nim	fp64	fixedpoint/base.html#fp64,SomeFloat,staticNatural	proc fp64(value: SomeFloat; precision: static Natural): FPInt64[precision]		82
-nim	`as`	fixedpoint/base.html#as.t,typed,FixedPoint	template `as`(value: typed; prototype: FixedPoint): typeof(prototype)		87
-nim	toFp64	fixedpoint/base.html#toFp64,FixedPoint	proc toFp64(value: FixedPoint): auto		94
-nim	toFp32	fixedpoint/base.html#toFp32,FixedPoint	proc toFp32(value: FixedPoint): auto		101
-nimgrp	fp32	fixedpoint/base.html#fp32-procs-all	proc		67
-nimgrp	fp64	fixedpoint/base.html#fp64-procs-all	proc		77
+nim	fp32	fixedpoint/base.html#fp32,SomeInteger,staticNatural	proc fp32(value: SomeInteger; precision: static Natural): FPInt32[precision]		71
+nim	fp32	fixedpoint/base.html#fp32,SomeFloat,staticNatural	proc fp32(value: SomeFloat; precision: static Natural): FPInt32[precision]		76
+nim	fp64	fixedpoint/base.html#fp64,SomeInteger,staticNatural	proc fp64(value: SomeInteger; precision: static Natural): FPInt64[precision]		81
+nim	fp64	fixedpoint/base.html#fp64,SomeFloat,staticNatural	proc fp64(value: SomeFloat; precision: static Natural): FPInt64[precision]		86
+nim	`as`	fixedpoint/base.html#as.t,typed,FixedPoint	template `as`(value: typed; prototype: FixedPoint): typeof(prototype)		91
+nim	toFp64	fixedpoint/base.html#toFp64,FixedPoint	proc toFp64(value: FixedPoint): auto		98
+nim	toFp32	fixedpoint/base.html#toFp32,FixedPoint	proc toFp32(value: FixedPoint): auto		105
+nimgrp	fp64	fixedpoint/base.html#fp64-procs-all	proc		81
+nimgrp	fp32	fixedpoint/base.html#fp32-procs-all	proc		71

@@ -8,6 +8,6 @@ nim	`<`	fixedpoint/comparison.html#<,SomeNumber,FixedPoint	proc `<`(a`gensym1: S
 nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,FixedPoint	proc `<=`(a`gensym2, b`gensym2: FixedPoint): bool		4
 nim	`<=`	fixedpoint/comparison.html#<=,FixedPoint,SomeNumber	proc `<=`(a`gensym2: FixedPoint; b`gensym2: SomeNumber): bool		8
 nim	`<=`	fixedpoint/comparison.html#<=,SomeNumber,FixedPoint	proc `<=`(a`gensym2: SomeNumber; b`gensym2: FixedPoint): bool		16
+nimgrp	==	fixedpoint/comparison.html#==-procs-all	proc		4
 nimgrp	<=	fixedpoint/comparison.html#<=-procs-all	proc		4
 nimgrp	<	fixedpoint/comparison.html#<-procs-all	proc		4
-nimgrp	==	fixedpoint/comparison.html#==-procs-all	proc		4
