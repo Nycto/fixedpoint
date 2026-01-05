@@ -3,12 +3,11 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: nimlang/choosenim
     permissions:
       contents: write
     steps:
-    - run: choosenim update -y 2.2.0
-    - uses: actions/checkout@v3
-    - run: git config --global --add safe.directory "$(pwd)"
-    - run: nimble test
-    - run: nimble -d:release -d:danger test
+      - uses: actions/checkout@v3
+      - run: git config --global --add safe.directory "$(pwd)"
+      - uses: iffy/install-nim@v5
+      - run: nimble test
+      - run: nimble -d:release -d:danger test
