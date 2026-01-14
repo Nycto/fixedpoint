@@ -1,7 +1,7 @@
 ##
 ## Decimal values using an integer and a precision
 ##
-import macros
+import std/[macros, math]
 
 type
   FPInt32*[P: static Natural] = distinct int32
@@ -116,3 +116,6 @@ proc toFp32*(value: FixedPoint): auto {.inline.} =
         high(FPInt32[value.precision])
       else:
         FPInt32[value.precision](value.int64.int32)
+
+proc sgn*(value: FixedPoint): typeof(value) =
+  return cast[underlying(value)](value).sgn as value

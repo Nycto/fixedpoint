@@ -42,6 +42,11 @@ template defineTests(build: untyped, p: static Natural) =
       check lowestPositive(typ).toFloat() > 0
       check lowestPositive(typ).toFloat() < 1
 
+    test "sgn":
+      check build(123, p).sgn == 1
+      check build(-123, p).sgn == -1
+      check build(0, p).sgn == 0
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)
