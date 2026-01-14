@@ -2,6 +2,8 @@ import std/[unittest, math], fixedpoint
 include util
 
 template defineTests(build: untyped, p: static Natural) =
+  type typ = typeof(build(0, p))
+
   suite "Fixed point basics for " & $typeof(build(4, p)):
     test "toInt":
       check build(1, p).toInt == 1
@@ -25,16 +27,20 @@ template defineTests(build: untyped, p: static Natural) =
       check build(10, p).toFp32.toInt() == 10'i32
 
     test "Create int value for high":
-      discard build(high(typeof(build(0, p))).toInt(), p)
+      discard build(high(typ).toInt(), p)
 
     test "Create int value for low":
-      discard build(low(typeof(build(0, p))).toInt(), p)
+      discard build(low(typ).toInt(), p)
 
     test "Create float value for high":
-      discard build(high(typeof(build(0, p))).toFloat(), p)
+      discard build(high(typ).toFloat(), p)
 
     test "Create float value for low":
-      discard build(low(typeof(build(0, p))).toFloat(), p)
+      discard build(low(typ).toFloat(), p)
+
+    test "Lowest positive":
+      check lowestPositive(typ).toFloat() > 0
+      check lowestPositive(typ).toFloat() < 1
 
 defineTests(fp32, 4)
 defineTests(fp32, 8)

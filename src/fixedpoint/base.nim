@@ -37,6 +37,10 @@ template underlying*(value: FixedPoint | typedesc[FixedPoint]): typedesc =
   ## Returns the underlying type of a fixed point number
   when value is FPInt32: int32 else: int64
 
+proc lowestPositive*(typ: typedesc[FixedPoint]): typ =
+  ## Returns the lowest positive value of a fixed point number
+  return typeof(result)(1)
+
 proc high*(typ: typedesc[FixedPoint]): typ =
   return typeof(result)(high(typ.underlying))
 
