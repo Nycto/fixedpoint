@@ -47,6 +47,12 @@ template defineTests(build: untyped, p: static Natural) =
       check build(-123, p).sgn == -1
       check build(0, p).sgn == 0
 
+    test "Generate random numbers":
+      let low = build(0, p)
+      let high = build(100, p)
+      for _ in 0..100:
+        check rand(low..high) in low..high
+
 defineTests(fp32, 4)
 defineTests(fp32, 8)
 defineTests(fp32, 16)

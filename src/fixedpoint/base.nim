@@ -1,7 +1,7 @@
 ##
 ## Decimal values using an integer and a precision
 ##
-import std/[macros, math]
+import std/[macros, math, random]
 
 type
   FPInt32*[P: static Natural] = distinct int32
@@ -119,3 +119,7 @@ proc toFp32*(value: FixedPoint): auto {.inline.} =
 
 proc sgn*(value: FixedPoint): typeof(value) =
   return cast[underlying(value)](value).sgn as value
+
+proc rand*[T: FixedPoint](x: HSlice[T, T]): T =
+  ## Producse a random fixed point number within the given range
+  return T(rand(cast[underlying(T)](x.a)..cast[underlying(T)](x.b)))
