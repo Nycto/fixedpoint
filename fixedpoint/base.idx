@@ -19,5 +19,6 @@ nim	`as`	fixedpoint/base.html#as.t,typed,FixedPoint	template `as`(value: typed; 
 nim	toFp64	fixedpoint/base.html#toFp64,FixedPoint	proc toFp64(value: FixedPoint): auto		102
 nim	toFp32	fixedpoint/base.html#toFp32,FixedPoint	proc toFp32(value: FixedPoint): auto		109
 nim	sgn	fixedpoint/base.html#sgn,FixedPoint	proc sgn(value: FixedPoint): typeof(value)		120
+nim	rand	fixedpoint/base.html#rand,HSlice[T: FixedPoint,T: FixedPoint]	proc rand[T: FixedPoint](x: HSlice[T, T]): T		123
 nimgrp	fp64	fixedpoint/base.html#fp64-procs-all	proc		85
 nimgrp	fp32	fixedpoint/base.html#fp32-procs-all	proc		75
