@@ -8,13 +8,22 @@ template defineTests(fp: untyped, p: static Natural) =
       check 1.fp(p) + 1.fp(p) == 2.fp(p)
       check 1.5.fp(p) + 1.2.fp(p) == 2.7.fp(p)
 
+      const value = 1.fp(p) + 1.fp(p)
+      check value == 2.fp(p)
+
     test "Subtraction":
       check 1.fp(p) - 1.fp(p) == 0.0
       check 1.5.fp(p) - 1.2.fp(p) == 0.3
 
+      const value = 3.fp(p) - 1.fp(p)
+      check value == 2.fp(p)
+
     test "Multiply":
       check 2.fp(p) * 4.fp(p) == 8.fp(p)
       check 2.5.fp(p) * 4.5.fp(p) == 11.25.fp(p)
+
+      const value = 2.5.fp(p) * 4.5.fp(p)
+      check value == 11.25.fp(p)
 
     test "Negative number multiplication":
       check 2.fp(p) * -4.fp(p) == -8.fp(p)
@@ -26,6 +35,9 @@ template defineTests(fp: untyped, p: static Natural) =
     test "Divide":
       check 8.fp(p) / 4.fp(p) == 2.fp(p)
       check 11.25.fp(p) / 4.5.fp(p) == 2.5.fp(p)
+
+      const value = 11.25.fp(p) / 4.5.fp(p)
+      check value == 2.5.fp(p)
 
     test "Divide":
       check 8.fp(p) div 4.fp(p) == 2.fp(p)

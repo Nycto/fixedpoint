@@ -1,4 +1,16 @@
-import base, util, std/strformat
+import base, util
+
+proc builtinMulOverflow[T: int32 | int64](
+  a, b: T, result: var T
+): bool {.importc: "__builtin_mul_overflow", nodecl.}
+
+proc builtinSubOverflow[T: int32 | int64](
+  a, b: T, result: var T
+): bool {.importc: "__builtin_sub_overflow", nodecl.}
+
+proc builtinAddOverflow[T: int32 | int64](
+  a, b: T, result: var T
+): bool {.importc: "__builtin_add_overflow", nodecl.}
 
 type SaturationMode = enum
   ## Represents the action to take when a saturation occurs
@@ -6,17 +18,31 @@ type SaturationMode = enum
   SaturateHigh
   SaturateLow
 
-template calculate(a, b, checkSaturation, body: untyped): typeof(a) =
+template calculate(a, b, callback, checkSaturation, body, postProcess: untyped) =
   ## Executes a standard operation on two fixed-point numbers
   assert(a.precision == b.precision)
-  return
-    case checkSaturation(underlying(a)(a), underlying(b)(b))
-    of SaturateHigh:
-      typeof(a).high
-    of SaturateLow:
-      typeof(a).low
-    of SatCalculate:
-      typeof(a)(body)
+
+  when nimvm:
+    return
+      case checkSaturation(underlying(a)(a), underlying(b)(b))
+      of SaturateHigh:
+        typeof(a).high
+      of SaturateLow:
+        typeof(a).low
+      of SatCalculate:
+        let it {.inject.} = body
+        typeof(a)(postProcess)
+  else:
+    var it {.inject.}: underlying(a)
+    if callback(underlying(a)(a), underlying(b)(b), it):
+      case checkSaturation(underlying(a)(a), underlying(b)(b))
+      of SaturateHigh:
+        return typeof(a).high
+      of SaturateLow:
+        return typeof(a).low
+      of SatCalculate:
+        discard
+    return typeof(a)(postProcess)
 
 proc subSaturation[T: SomeInteger](a, b: T): SaturationMode =
   ## Returns the saturation mode for subtraction overflow
@@ -29,7 +55,9 @@ proc subSaturation[T: SomeInteger](a, b: T): SaturationMode =
 
 proc `-`*(a, b: FixedPoint): typeof(a) {.inline.} =
   ## Subtraction operation
-  calculate(a, b, subSaturation, underlying(a)(a) - underlying(b)(b))
+  calculate(
+    a, b, builtinSubOverflow, subSaturation, underlying(a)(a) - underlying(b)(b), it
+  )
 
 proc addSaturation[T: SomeInteger](a, b: T): SaturationMode =
   # Returns the saturation mode for addition overflow
@@ -42,7 +70,9 @@ proc addSaturation[T: SomeInteger](a, b: T): SaturationMode =
 
 proc `+`*(a, b: FixedPoint): typeof(a) {.inline.} =
   ## Addition operation with saturating arithmetic
-  calculate(a, b, addSaturation, underlying(a)(a) + underlying(b)(b))
+  calculate(
+    a, b, builtinAddOverflow, addSaturation, underlying(a)(a) + underlying(b)(b), it
+  )
 
 proc mulSaturation[T: SomeInteger](a, b: T): SaturationMode =
   # Returns the saturation mode for multiplication overflow
@@ -67,9 +97,11 @@ proc mulSaturation[T: SomeInteger](a, b: T): SaturationMode =
     else:
       SatCalculate
 
-proc `*`*(a, b: FixedPoint): typeof(a) {.inline.} =
+proc `*`*(a, b: FixedPoint): typeof(a) {.inline, raises: [].} =
   # Fixed point multiplication with saturating arithmetic
-  calculate(a, b, mulSaturation, int64(a) * int64(b) shr a.precision)
+  calculate(
+    a, b, builtinMulOverflow, mulSaturation, int64(a) * int64(b), it shr a.precision
+  )
 
 proc `/`*(a, b: FixedPoint): typeof(a) {.inline.} =
   # Fixed point division
